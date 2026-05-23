@@ -1,0 +1,21 @@
+Caddyfile
+DNS
+DropSpace
+Forgejo
+Navidrome
+btop
+caddy
+dns.home.arpa
+drop.home.arpa
+forgejo.home.arpa
+github
+music.home.arpa
+navidrome
+pihole
+search.home.arpa
+searxng
+sysMonitor.home.arpa
+tailnet
+tiwo2012.github
+ttyd
+checksum_v1 = 8e7e76438fa9ecdf0fb9d55b60f9c632

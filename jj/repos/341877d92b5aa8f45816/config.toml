@@ -1,0 +1,7 @@
+#:schema https://docs.jj-vcs.dev/latest/config-schema.json
+
+[ui]
+conflict-marker-style = "git"
+
+[snapshot]
+auto-update-stale = true

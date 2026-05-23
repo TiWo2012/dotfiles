@@ -1,0 +1,18 @@
+{
+  "theme": {
+    "font": {
+      "family": "Barlow Medium"
+    },
+    "fontMono": {
+      "family": "Iosevka Term ss08"
+    }
+  },
+  "network": {
+    "preferredInterface": "enp4s0"
+  },
+  "layout": {
+    "right": {
+      "widgets": ["cpu", "ram", "network", "clock"]
+    }
+  }
+}

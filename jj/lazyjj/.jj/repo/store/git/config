@@ -1,0 +1,13 @@
+# See https://git-scm.com/docs/git-config
+
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = true
+	logallrefupdates = false
+	symlinks = true
+	ignorecase = false
+	precomposeunicode = false
+[remote "origin"]
+	url = https://github.com/lazyjj-dev/lazyjj.git
+	fetch = +refs/heads/*:refs/remotes/origin/*

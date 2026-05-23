@@ -1,0 +1,26 @@
+# LazyJJ Core Aliases
+# https://lazyjj.dev
+#
+# Aliases that add value beyond built-in JJ commands.
+# For shortcuts, see lazyjj-shortcuts.toml.
+
+[aliases]
+
+# diff-summary - Compact diff summary without pager
+# What: Shows a one-line-per-file summary of changes (Added/Modified/Deleted).
+# When: Use for a quick overview of which files changed, without line details.
+# Usage: jj diff-summary
+diff-summary = ["diff", "--summary", "--no-pager"]
+
+# diff-files - List changed filenames only
+# What: Outputs just the names of changed files, one per line.
+# When: Useful for scripting or piping to other commands.
+# Usage: jj diff-files
+#        jj diff-files | xargs nvim
+diff-files = ["diff", "--name-only", "--no-pager"]
+
+# log-short - Quick log (last 10 commits)
+# What: Shows the 10 most recent commits in the log.
+# When: Use for a quick glance at recent history without scrolling.
+# Usage: jj log-short
+log-short = ["log", "--limit", "10"]

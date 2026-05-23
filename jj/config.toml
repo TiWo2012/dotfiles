@@ -1,0 +1,8 @@
+#:schema https://docs.jj-vcs.dev/latest/config-schema.json
+
+name = "Xenex"
+email = "timo.wolf@gmx.ch"
+
+[user]
+email = "timo.wolf@gmx.ch"
+name = "Xenex"
