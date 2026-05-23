@@ -1,0 +1,3 @@
+[submodule "nvim"]
+	path = nvim
+	url = https://forgejo.home.arpa/xenex/nvim-0.12-config.git
