@@ -1,0 +1,24 @@
+input {
+    keyboard {
+        xkb {
+            layout "ch,custom"
+            variant "de,"
+            options "grp:alt_space_toggle"
+          }
+
+        numlock
+        repeat-rate 40
+        repeat-delay 600
+    }
+
+    touchpad {
+        tap
+        natural-scroll
+    }
+
+    tablet {
+        left-handed
+    }
+
+    focus-follows-mouse
+}

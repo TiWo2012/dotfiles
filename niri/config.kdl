@@ -1,0 +1,19 @@
+// Niri config - translated from Hyprland
+// Modular structure using includes (available since niri 25.11)
+
+include "input.kdl"
+include "outputs.kdl"
+include "layout.kdl"
+include "bindings.kdl"
+include "autostart.kdl"
+include "window-rules.kdl"
+
+hotkey-overlay {
+    skip-at-startup
+}
+
+screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
+
+animations {
+    // slowdown 3.0
+}
