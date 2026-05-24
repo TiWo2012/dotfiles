@@ -1,4 +1,4 @@
-spawn-at-startup "quickshell" "--config" "fancy-bar"
+spawn-at-startup "waybar" 
 spawn-at-startup "walker" "--gapplication-service"
 spawn-at-startup "udiskie" "--automount" "--tray"
 spawn-at-startup "swayidle" "-w" "timeout" "290" "swaylock -kfFel -i /home/timo/Pictures/walpapers/mountains.jpg" "timeout" "300" "niri msg action power-off-monitors" "timeout" "600" "systemctl suspend-then-hibernate";

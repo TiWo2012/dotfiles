@@ -1,0 +1,124 @@
+/* =========================
+   GLOBAL
+   ========================= */
+
+window#waybar {
+  background: transparent;
+  color: @foreground;
+  font-family: 'FiraCodeNerdFont';
+  font-size: 13px;
+}
+
+
+/* =========================
+   CENTERED PILL CONTAINER
+   ========================= */
+
+.modules-center {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 25px;
+  padding: 0 14px;
+}
+
+
+/* =========================
+   MODULE SPACING
+   ========================= */
+
+.modules-center > widget {
+  margin: 0 6px;
+}
+
+
+/* =========================
+   WORKSPACES
+   ========================= */
+
+/* WORKSPACES COLOR */
+#workspaces button {
+  color: #ffffff;        /* white font for all workspaces */
+}
+
+#workspaces button.active {
+  color: #ffffff;        /* active workspace stays white */
+  background-color: rgba(255, 255, 255, 0.1); /* subtle highlight */
+  border-radius: 6px;
+}
+
+/* hover only changes background, not text color */
+
+/* =========================
+   MODULE DEFAULTS
+   ========================= */
+
+#clock,
+#bluetooth,
+#network,
+#pulseaudio,
+#cpu,
+#battery {
+  margin: 0 4px;
+  min-width: 12px;
+}
+
+
+/* =========================
+   TRAY
+   ========================= */
+
+#tray {
+  margin-left: 6px;
+}
+
+#custom-expand-icon {
+  margin-right: 6px;
+}
+
+
+/* =========================
+   TOOLTIP
+   ========================= */
+
+tooltip {
+  padding: 4px;
+  border-radius: 6px;
+}
+
+
+/* =========================
+   CUSTOM INDICATORS
+   ========================= */
+
+#custom-screenrecording-indicator,
+#custom-idle-indicator,
+#custom-notification-silencing-indicator {
+  min-width: 12px;
+  margin-left: 5px;
+  font-size: 10px;
+  padding-bottom: 1px;
+}
+
+#custom-screenrecording-indicator.active,
+#custom-idle-indicator.active,
+#custom-notification-silencing-indicator.active {
+  color: #a55555;
+}
+
+#custom-voxtype {
+  min-width: 12px;
+  margin-left: 6px;
+}
+
+#custom-voxtype.recording {
+  color: #a55555;
+}
+
+
+/* =========================
+   HOVER EFFECT (SUBTLE)
+   ========================= */
+
+.modules-center > widget:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+}
