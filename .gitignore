@@ -33,5 +33,7 @@
 !fastfetch/**
 !ranger/
 !ranger/**
+ranger/**/__pycache__/
+ranger/**/*.pyc
 !systemd/
 !systemd/**
