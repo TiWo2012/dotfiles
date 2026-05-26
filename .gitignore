@@ -31,3 +31,5 @@
 !elephant/**
 !fastfetch/
 !fastfetch/**
+!systemd/
+!systemd/**
