@@ -1,0 +1,4 @@
+# PSM Certificate Override Settings file
+# This is a generated file!  Do not edit.
+localhost:47990:	OID.2.16.840.1.101.3.4.2.1	88:10:E2:68:68:19:B1:1D:31:7E:30:28:F5:6B:03:5A:31:BA:1E:F9:80:BA:71:F6:7F:42:D1:6D:AA:DC:6A:18	
+forgejo.home.arpa:443:	OID.2.16.840.1.101.3.4.2.1	33:04:80:7B:52:43:9D:4C:48:64:AE:8B:E3:97:78:F3:05:F2:8A:30:0E:06:54:99:68:50:6B:97:83:A9:D8:5E	
