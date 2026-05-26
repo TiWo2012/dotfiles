@@ -11,10 +11,12 @@ window#waybar {
 
 
 /* =========================
-   CENTERED PILL CONTAINER
+   PILL CONTAINERS
    ========================= */
 
-.modules-center {
+.modules-left,
+.modules-center,
+.modules-right {
   background-color: rgba(0, 0, 0, 0.5);
   border-radius: 25px;
   padding: 0 14px;
@@ -25,8 +27,22 @@ window#waybar {
    MODULE SPACING
    ========================= */
 
-.modules-center > widget {
+.modules-left > widget,
+.modules-center > widget,
+.modules-right > widget {
   margin: 0 6px;
+}
+
+
+/* =========================
+   HOSTNAME
+   ========================= */
+
+#custom-hostname {
+  font-weight: bold;
+  margin-right: 6px;
+  padding-right: 8px;
+  border-right: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 
@@ -34,18 +50,16 @@ window#waybar {
    WORKSPACES
    ========================= */
 
-/* WORKSPACES COLOR */
 #workspaces button {
-  color: #ffffff;        /* white font for all workspaces */
+  color: #ffffff;
 }
 
 #workspaces button.active {
-  color: #ffffff;        /* active workspace stays white */
-  background-color: rgba(255, 255, 255, 0.1); /* subtle highlight */
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.1);
   border-radius: 6px;
 }
 
-/* hover only changes background, not text color */
 
 /* =========================
    MODULE DEFAULTS
@@ -55,8 +69,7 @@ window#waybar {
 #bluetooth,
 #network,
 #pulseaudio,
-#cpu,
-#battery {
+#cpu {
   margin: 0 4px;
   min-width: 12px;
 }
@@ -118,7 +131,9 @@ tooltip {
    HOVER EFFECT (SUBTLE)
    ========================= */
 
-.modules-center > widget:hover {
+.modules-left > widget:hover,
+.modules-center > widget:hover,
+.modules-right > widget:hover {
   background-color: rgba(255, 255, 255, 0.08);
   border-radius: 8px;
 }
