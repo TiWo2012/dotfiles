@@ -31,5 +31,7 @@
 !elephant/**
 !fastfetch/
 !fastfetch/**
+!ranger/
+!ranger/**
 !systemd/
 !systemd/**
