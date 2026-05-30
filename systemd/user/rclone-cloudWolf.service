@@ -5,10 +5,7 @@ Wants=network-online.target
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/rclone mount cloudWolf: %h/CloudWolf \
-  --vfs-cache-mode writes \
-  --exclude "BW/**" \
-  --exclude "sw/**"
+ExecStart=/usr/bin/rclone mount cloudWolf: %h/CloudWolf
 
 ExecStop=/bin/fusermount -u %h/Onedrive
 Restart=on-failure

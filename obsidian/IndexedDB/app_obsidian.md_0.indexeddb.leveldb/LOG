@@ -1,3 +1,3 @@
-2026/05/26-18:06:58.378 67e6d Reusing MANIFEST /home/timo/.config/obsidian/IndexedDB/app_obsidian.md_0.indexeddb.leveldb/MANIFEST-000001
-2026/05/26-18:06:58.379 67e6d Recovering log #3
-2026/05/26-18:06:58.410 67e6d Reusing old log /home/timo/.config/obsidian/IndexedDB/app_obsidian.md_0.indexeddb.leveldb/000003.log 
+2026/05/30-17:06:09.002 1dcd Reusing MANIFEST /home/timo/.config/obsidian/IndexedDB/app_obsidian.md_0.indexeddb.leveldb/MANIFEST-000001
+2026/05/30-17:06:09.003 1dcd Recovering log #3
+2026/05/30-17:06:09.079 1dcd Reusing old log /home/timo/.config/obsidian/IndexedDB/app_obsidian.md_0.indexeddb.leveldb/000003.log 
