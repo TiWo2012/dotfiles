@@ -46,6 +46,8 @@ j() {
 }
 
 gcm() {
+  git add .
+
   diff=$(git diff --staged)
 
   [ -z "$diff" ] && {
