@@ -49,7 +49,6 @@ alias ls='eza -lh'
 alias sync-pwd='~/.local/bin/keepass-sync.sh'
 alias yay='yay --noconfirm'
 alias cd='z'
-alias make='bear -- make -j 6 && make tags'
 alias stopSleep='sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target suspend-then-hibernate.target'
 alias startSleep='sudo systemctl unmask sleep.target suspend.target hibernate.target hybrid-sleep.target suspend-then-hibernate.target'
 
