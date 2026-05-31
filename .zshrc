@@ -45,6 +45,14 @@ j() {
   cd "$result" || return
 }
 
+gcm() {
+  (
+  git diff --staged
+  git diff
+) | opencode run "Write a conventional, yet precise commit message outlining most of the changes. give it a title and a body. the title should be concise. commit it after you are done."
+
+}
+
 alias ls='eza -lh'
 alias sync-pwd='~/.local/bin/keepass-sync.sh'
 alias yay='yay --noconfirm'
