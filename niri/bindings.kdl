@@ -6,7 +6,7 @@ binds {
     Mod+Shift+T hotkey-overlay-title="Activity" { spawn "alacritty" "-e" "btop"; }
 
     Mod+Q hotkey-overlay-title="Kill active window" { close-window; }
-    Mod+W hotkey-overlay-title="Browser" { spawn "zen-browser"; }
+    Mod+W hotkey-overlay-title="Browser" { spawn "firefox"; }
 
     Mod+H { focus-column-left; }
     Mod+J { focus-window-down; }
