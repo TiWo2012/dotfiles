@@ -176,6 +176,7 @@ alias cd='z'
 alias stopSleep='sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target suspend-then-hibernate.target'
 alias startSleep='sudo systemctl unmask sleep.target suspend.target hibernate.target hybrid-sleep.target suspend-then-hibernate.target'
 alias open='xdg-open'
+alias Hwol='wol d8:43:ae:c8:bd:e4'
 
 HISTFILE=~/.zsh_history
 HISTSIZE=100000
