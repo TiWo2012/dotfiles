@@ -35,5 +35,7 @@
 !ranger/**
 ranger/**/__pycache__/
 ranger/**/*.pyc
+!systemd/
+!systemd/**
 !.zshrc
 !.tmux.conf
