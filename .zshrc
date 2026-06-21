@@ -48,20 +48,22 @@ j() {
 gcm() {
   git add .
 
-  diff=$(git diff --staged)
-
+  diff=$(git diff --cached)
   [ -z "$diff" ] && {
     echo "Nothing staged."
     return 1
   }
 
-  msg=$(printf "%s" "$diff" | opencode run "Write a precise conventional commit message. Give a short title (max 72 chars) and a body explaining why. Only describe the provided diff.")
+  msg=$(printf "%s" "$diff" | opencode run "Write a precise conventional commit message. Give a short title (max 72 chars) and a body explaining why. Only describe the provided diff." | sed '/^```/d')
 
   echo "-----"
   echo "$msg"
   echo "-----"
 
-  git commit -m "$msg"
+  tmp=$(mktemp)
+  printf "%s\n" "$msg" > "$tmp"
+  git commit -F "$tmp"
+  rm "$tmp"
 }
 
 cr() {
