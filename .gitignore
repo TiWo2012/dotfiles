@@ -27,6 +27,8 @@
 !autostart/**
 !btop/
 !btop/**
+!quickshell/
+!quickshell/**
 !elephant/
 !elephant/**
 !fastfetch/

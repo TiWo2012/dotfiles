@@ -1,7 +1,9 @@
-spawn-at-startup "waybar" 
+// spawn-at-startup "waybar" // replaced by quickshell
+spawn-at-startup "quickshell" 
+spawn-at-startup "elephant" "service"
 spawn-at-startup "walker" "--gapplication-service"
 spawn-at-startup "udiskie" "--automount" "--tray"
-spawn-at-startup "swayidle" "-w" "timeout" "290" "swaylock -kfFel -i /home/timo/Pictures/walpapers/mountains.jpg" "timeout" "300" "niri msg action power-off-monitors" "timeout" "600" "systemctl suspend-then-hibernate";
-spawn-at-startup "rclone mount onedrive: /home/timo/Onedrive --vfs-cache-mode writes"
+spawn-at-startup "swayidle" "-w" "timeout" "290" "swaylock -kfFel -i /home/timo/Pictures/Wallpapers/walpapers/mountains.jpg" "timeout" "300" "niri msg action power-off-monitors" "timeout" "600" "systemctl suspend-then-hibernate";
+// spawn handled by systemd: rclone-onedrive.service
 spawn-at-startup "/usr/bin/lxqt-policykit-agent"
 spawn-at-startup "awww-daemon"

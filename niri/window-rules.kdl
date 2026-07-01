@@ -12,3 +12,19 @@ window-rule {
     match app-id="calc-terminal"
     open-floating true
 }
+
+window-rule {
+    match app-id="chrome-youtube.com__-Default"
+    open-on-workspace "media"
+    default-column-width { proportion 1.0; }
+}
+
+window-rule {
+  match app-id="firefox"
+  open-on-workspace "browser"
+}
+
+window-rule {
+    match app-id="^kitty$"
+    open-on-workspace "code"
+}

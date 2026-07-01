@@ -7,6 +7,7 @@ binds {
 
     Mod+Q hotkey-overlay-title="Kill active window" { close-window; }
     Mod+W hotkey-overlay-title="Browser" { spawn "firefox"; }
+    Mod+Y hotkey-overlay-title="YouTube" { spawn "gtk-launch" "youtube-webapp"; }
 
     Mod+H { focus-column-left; }
     Mod+J { focus-window-down; }
@@ -72,9 +73,9 @@ binds {
     Mod+BracketLeft { consume-or-expel-window-left; }
     Mod+BracketRight { consume-or-expel-window-right; }
 
-    Print { screenshot; }
-    Ctrl+Print { screenshot-screen; }
-    Alt+Print { screenshot-window; }
+    Print { spawn "/usr/local/bin/screenshot"; }
+    Ctrl+Print { spawn "/usr/local/bin/screenshot" "-s"; }
+    Alt+Print { spawn "/usr/local/bin/screenshot" "-w"; }
 
     Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
 
@@ -82,5 +83,5 @@ binds {
 
     Mod+Shift+P { power-off-monitors; }
 
-    Mod+Shift+S { spawn "screenshot"; }
+    Mod+Shift+S { spawn "/usr/local/bin/screenshot" "copy"; }
     }

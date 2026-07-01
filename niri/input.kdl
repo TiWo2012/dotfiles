@@ -1,8 +1,8 @@
 input {
     keyboard {
         xkb {
-            layout "ch,custom"
-            variant "de,"
+            layout "ch"
+            variant "de"
             options "grp:alt_space_toggle"
           }
 

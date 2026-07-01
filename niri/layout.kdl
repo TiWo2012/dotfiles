@@ -26,6 +26,21 @@ layout {
     struts {}
 }
 
+workspace "media" {
+    open-on-output "DP-2"
+}
+
+workspace "code" {
+    open-on-output "HDMI-A-1"
+}
+
+workspace "browser" {
+    open-on-output "DP-1"
+    layout {
+        default-column-width { proportion 1.0; }
+    }
+}
+
 window-rule {
     geometry-corner-radius 8
     clip-to-geometry true
