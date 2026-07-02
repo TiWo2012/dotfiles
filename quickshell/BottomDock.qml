@@ -6,6 +6,7 @@ import Quickshell.Wayland
 
 PanelWindow {
     id: root
+    required property var modelData
     anchors { bottom: true }
     margins { bottom: 10 }
 
@@ -66,7 +67,7 @@ PanelWindow {
         id: activationArea
         anchors.fill: parent
         hoverEnabled: true
-        acceptedButtons: Qt.LeftButton
+        acceptedButtons: Qt.NoButton
 
         onEntered: {
             hideTimer.stop()
