@@ -1,0 +1,23 @@
+IMAPAccount gmx
+Host imap.gmx.net
+Port 993
+User timo.wolf@gmx.ch
+PassCmd "secret-tool lookup service gmx-imap user timo.wolf@gmx.ch"
+TLSType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+IMAPStore gmx-remote
+Account gmx
+
+MaildirStore gmx-local
+Path ~/Mail/gmx/
+Inbox ~/Mail/gmx/INBOX
+SubFolders Verbatim
+
+Channel gmx
+Far :gmx-remote:
+Near :gmx-local:
+Patterns *
+Create Both
+Sync All
+Expunge Both

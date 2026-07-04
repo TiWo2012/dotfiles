@@ -41,3 +41,8 @@ ranger/**/*.pyc
 !systemd/**
 !.zshrc
 !.tmux.conf
+!.mbsyncrc
+!.msmtprc
+!.notmuch-config
+!.smbcredentials
+

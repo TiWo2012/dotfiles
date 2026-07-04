@@ -1,0 +1,13 @@
+[Unit]
+Description=Sync mail with mbsync
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+Environment=MAILCAPS=/home/timo/.mbsyncrc
+ExecStart=/usr/bin/mbsync -c /home/timo/.mbsyncrc gmx
+ExecStartPost=/usr/bin/notmuch new
+
+[Install]
+WantedBy=default.target
