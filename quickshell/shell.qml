@@ -120,6 +120,36 @@ ShellRoot {
             empty[ws.output] = !hasWindow
             niriOutputEmpty = empty
         }
+        root._activeWindowChanged = true
+        _refetchTimer.restart()
+    }
+
+    property bool _activeWindowChanged: false
+
+    Timer {
+        id: _refetchTimer
+        interval: 50
+        repeat: false
+        running: false
+        onTriggered: {
+            if (!root._activeWindowChanged) return
+            root._activeWindowChanged = false
+            wsRefresher.running = true
+        }
+    }
+
+    Process {
+        id: wsRefresher
+        command: ["niri", "msg", "-j", "workspaces"]
+        running: false
+        stdout: StdioCollector {
+            onStreamFinished: {
+                try {
+                    const d = JSON.parse(text)
+                    if (d.workspaces) root.handleWSC(d)
+                } catch (e) { console.warn("ws refresh err:", e) }
+            }
+        }
     }
 
     function handleWSA(data) {
