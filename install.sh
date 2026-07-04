@@ -78,7 +78,6 @@ install_pacman() {
     btop
     cmake
     dconf
-    dolphin
     eza
     fastfetch
     ffmpegthumbnailer
@@ -117,7 +116,6 @@ install_pacman() {
     python
     python-pip
     qalculate-gtk
-    ranger
     rclone
     ruby
     starship
