@@ -37,6 +37,7 @@
 !ranger/**
 ranger/**/__pycache__/
 ranger/**/*.pyc
+!install.sh
 !systemd/
 !systemd/**
 !.zshrc
