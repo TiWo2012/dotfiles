@@ -60,8 +60,10 @@ ShellRoot {
         const empty = {}
         for (const ws of data.workspaces) {
             m[ws.id] = JSON.parse(JSON.stringify(ws))
-            if (ws.output != null)
-                empty[ws.output] = !ws.active_window_id || ws.active_window_id === 0
+            if (ws.output != null) {
+                const hasWindow = Object.values(niriWindows).some(w => Number(w.workspace_id) === Number(ws.id))
+                empty[ws.output] = !hasWindow
+            }
         }
         niriWorkspaces = m
         niriOutputEmpty = empty
@@ -114,7 +116,8 @@ ShellRoot {
             const empty = {}
             for (const key of Object.keys(niriOutputEmpty))
                 empty[key] = niriOutputEmpty[key]
-            empty[ws.output] = !data.active_window_id || data.active_window_id === 0
+            const hasWindow = Object.values(niriWindows).some(w => Number(w.workspace_id) === Number(data.workspace_id))
+            empty[ws.output] = !hasWindow
             niriOutputEmpty = empty
         }
     }
@@ -125,7 +128,8 @@ ShellRoot {
             const empty = {}
             for (const key of Object.keys(niriOutputEmpty))
                 empty[key] = niriOutputEmpty[key]
-            empty[ws.output] = !ws.active_window_id || ws.active_window_id === 0
+            const hasWindow = Object.values(niriWindows).some(w => Number(w.workspace_id) === Number(data.id))
+            empty[ws.output] = !hasWindow
             niriOutputEmpty = empty
         }
         if (data.focused) {
