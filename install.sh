@@ -166,6 +166,7 @@ install_aur() {
   run_yay localsend
   run_yay hyprwhspr-bin
   run_yay youtube-webapp-bin
+  run_yay tpack
 
   ok "AUR packages installed"
 }
@@ -207,19 +208,14 @@ install_npm_global() {
 }
 
 setup_tmux() {
-  info "Setting up tmux plugins..."
+  info "Setting up tmux plugins via tpack..."
 
-  local tpm_dir="$HOME/.tmux/plugins/tpm"
-  if [[ ! -d "$tpm_dir" ]]; then
-    git clone https://github.com/tmux-plugins/tpm "$tpm_dir"
-    ok "TPM cloned"
+  if command -v tpack &>/dev/null; then
+    tmux new-session -d -s __tpack_install 2>/dev/null || true
+    tpack install 2>/dev/null && ok "Tmux plugins installed" || info "Run 'tpack install' inside tmux to install plugins"
+    tmux kill-session -t __tpack_install 2>/dev/null || true
   else
-    ok "TPM already installed"
-  fi
-
-  if [[ -f "$tpm_dir/bin/install_plugins" ]]; then
-    "$tpm_dir/bin/install_plugins"
-    ok "Tmux plugins installed"
+    info "tpack not found. Install it with the AUR step above."
   fi
 }
 
