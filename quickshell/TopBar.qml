@@ -14,9 +14,6 @@ PanelWindow {
     property string clockText: ""
     property string activeWindowTitle: ""
     property bool _showDate: false
-    property bool workspaceEmpty: true
-    property bool _proximity: false
-    readonly property bool _shouldShow: workspaceEmpty || _proximity
 
     property var cpuUsage: []
     property real cpuTotal: 0
@@ -29,11 +26,9 @@ PanelWindow {
     signal openAudio
     signal openBtop
 
-    implicitHeight: _shouldShow ? 26 : 4
-    exclusiveZone: -1
-    aboveWindows: true
-
-    Behavior on implicitHeight { PropertyAnimation { duration: 250; easing.type: Easing.OutCubic } }
+    implicitHeight: 26
+    exclusiveZone: 26
+    aboveWindows: false
 
     function _updateClock() {
         const n = new Date()
@@ -146,13 +141,11 @@ PanelWindow {
     Rectangle {
         id: glassBg
         anchors.fill: parent
-        color: root._shouldShow ? "#CC1a1b2e" : "transparent"
+        color: "#CC1a1b2e"
         radius: 13
         clip: true
 
-        Behavior on color { PropertyAnimation { duration: 200; easing.type: Easing.InCubic } }
-
-        layer.enabled: root._shouldShow
+        layer.enabled: true
         layer.effect: MultiEffect {
             blurEnabled: true
             blurMax: 32
@@ -166,8 +159,6 @@ PanelWindow {
             color: "transparent"
             border.color: "#33ffffff"
             border.width: 1
-            opacity: root._shouldShow ? 1 : 0
-            Behavior on opacity { PropertyAnimation { duration: 200; easing.type: Easing.InCubic } }
         }
 
         Rectangle {
@@ -175,8 +166,6 @@ PanelWindow {
             anchors.margins: 1
             radius: 12
             color: "#10ffffff"
-            opacity: root._shouldShow ? 1 : 0
-            Behavior on opacity { PropertyAnimation { duration: 200; easing.type: Easing.InCubic } }
         }
 
         RowLayout {
@@ -184,7 +173,6 @@ PanelWindow {
             anchors.leftMargin: 14
             anchors.rightMargin: 14
             spacing: 8
-            visible: root._shouldShow
 
             Item {
                 id: powerItem
@@ -277,10 +265,8 @@ PanelWindow {
                             onClicked: root.openBtop()
                             onEntered: {
                                 cpuDropdownHideTimer.stop()
-                                if (!root.workspaceEmpty || root._shouldShow) {
-                                    root._cpuDropdownVisible = true
-                                    root._cpuHoverActive = true
-                                }
+                                root._cpuDropdownVisible = true
+                                root._cpuHoverActive = true
                             }
                             onExited: {
                                 if (!root._cpuHoverActive) return
@@ -316,30 +302,6 @@ PanelWindow {
                         }
                     }
                 }
-            }
-        }
-    }
-
-    MouseArea {
-        id: activationArea
-        anchors.fill: parent
-        hoverEnabled: true
-        acceptedButtons: Qt.NoButton
-
-        onEntered: {
-            hideTimer.stop()
-            if (!root.workspaceEmpty) root._proximity = true
-        }
-
-        onExited: {
-            if (!root.workspaceEmpty) hideTimer.start()
-        }
-
-        Timer {
-            id: hideTimer
-            interval: 800
-            onTriggered: {
-                if (!root.workspaceEmpty) root._proximity = false
             }
         }
     }

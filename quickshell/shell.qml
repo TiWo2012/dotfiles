@@ -14,7 +14,6 @@ ShellRoot {
     property var niriWorkspaces: ({})
     property var niriAllWorkspaces: []
     property var niriWindows: ({})
-    property var niriOutputEmpty: ({})
     property string niriActiveWindowTitle: ""
     property string niriFocusedWorkspaceId: ""
 
@@ -41,6 +40,18 @@ ShellRoot {
     property var _niriFocusWindowId: null
     property bool _pendingDockLaunch: false
     property var _previousWindows: ({})
+    property bool _wsRefreshQueued: false
+    property bool _winRefreshQueued: false
+
+    Timer {
+        interval: 5000
+        running: true
+        repeat: true
+        onTriggered: {
+            if (!root._wsRefreshQueued) root.wsRefresher.running = true
+            if (!root._winRefreshQueued) root.winRefresher.running = true
+        }
+    }
 
     function handleNiriEvent(event) {
         const keys = Object.keys(event)
@@ -52,26 +63,25 @@ ShellRoot {
             case "WorkspaceActivated": handleWSA(data); break
             case "WindowsChanged": handleWinC(data); break
             case "WindowFocusChanged": handleWFocus(data); break
+            case "WindowLayoutsChanged": handleWLC(); break
         }
     }
 
     function handleWSC(data) {
         const m = {}
-        const empty = {}
+        const all = []
         for (const ws of data.workspaces) {
             m[ws.id] = JSON.parse(JSON.stringify(ws))
-            if (ws.output != null) {
-                const hasWindow = Object.values(niriWindows).some(w => Number(w.workspace_id) === Number(ws.id))
-                empty[ws.output] = !hasWindow
-            }
+            all.push(m[ws.id])
         }
+        all.sort((a, b) => a.idx - b.idx)
         niriWorkspaces = m
-        niriOutputEmpty = empty
-        niriAllWorkspaces = Object.values(m).sort((a,b) => a.idx - b.idx)
-        const f = niriAllWorkspaces.find(w => w.is_focused)
-        if (f) {
-            niriFocusedWorkspaceId = f.id
-            _niriFocusWindowId = f.active_window_id
+        niriAllWorkspaces = all
+
+        const focused = all.find(w => w.is_focused)
+        if (focused) {
+            niriFocusedWorkspaceId = focused.id
+            _niriFocusWindowId = focused.active_window_id
         }
         syncActive()
     }
@@ -99,42 +109,15 @@ ShellRoot {
         root._previousWindows = {}
         for (const id of Object.keys(m))
             root._previousWindows[id] = true
-        const empty = {}
-        for (const ws of niriAllWorkspaces) {
-            if (ws.output != null) {
-                const hasWindow = Object.values(m).some(w => Number(w.workspace_id) === Number(ws.id))
-                empty[ws.output] = !hasWindow
-            }
-        }
-        niriOutputEmpty = empty
+
         syncActive()
     }
 
     function handleWSAWC(data) {
-        const ws = niriWorkspaces[data.workspace_id]
-        if (ws && ws.output != null) {
-            const empty = {}
-            for (const key of Object.keys(niriOutputEmpty))
-                empty[key] = niriOutputEmpty[key]
-            const hasWindow = Object.values(niriWindows).some(w => Number(w.workspace_id) === Number(data.workspace_id))
-            empty[ws.output] = !hasWindow
-            niriOutputEmpty = empty
-        }
-        root._activeWindowChanged = true
-        _refetchTimer.restart()
-    }
-
-    property bool _activeWindowChanged: false
-
-    Timer {
-        id: _refetchTimer
-        interval: 50
-        repeat: false
-        running: false
-        onTriggered: {
-            if (!root._activeWindowChanged) return
-            root._activeWindowChanged = false
-            wsRefresher.running = true
+        if (winRefresher.running) {
+            _winRefreshQueued = true
+        } else {
+            winRefresher.running = true
         }
     }
 
@@ -148,30 +131,57 @@ ShellRoot {
                     const d = JSON.parse(text)
                     if (d.workspaces) root.handleWSC(d)
                 } catch (e) { console.warn("ws refresh err:", e) }
+                if (root._wsRefreshQueued) {
+                    root._wsRefreshQueued = false
+                    root.wsRefresher.running = true
+                }
+            }
+        }
+    }
+
+    Process {
+        id: winRefresher
+        command: ["niri", "msg", "-j", "windows"]
+        running: false
+        stdout: StdioCollector {
+            onStreamFinished: {
+                try {
+                    const d = JSON.parse(text)
+                    if (d.windows) root.handleWinC(d)
+                } catch (e) { console.warn("win refresh err:", e) }
+                if (root._winRefreshQueued) {
+                    root._winRefreshQueued = false
+                    root.winRefresher.running = true
+                }
             }
         }
     }
 
     function handleWSA(data) {
-        const ws = niriWorkspaces[data.id]
-        if (ws && ws.output != null) {
-            const empty = {}
-            for (const key of Object.keys(niriOutputEmpty))
-                empty[key] = niriOutputEmpty[key]
-            const hasWindow = Object.values(niriWindows).some(w => Number(w.workspace_id) === Number(data.id))
-            empty[ws.output] = !hasWindow
-            niriOutputEmpty = empty
-        }
         if (data.focused) {
             niriFocusedWorkspaceId = String(data.id)
-            _niriFocusWindowId = ws ? ws.active_window_id : null
+            const ws = niriWorkspaces[data.id]
+            if (ws) _niriFocusWindowId = ws.active_window_id
             syncActive()
+        }
+        if (wsRefresher.running) {
+            _wsRefreshQueued = true
+        } else {
+            wsRefresher.running = true
         }
     }
 
     function handleWFocus(data) {
         _niriFocusWindowId = data.id
         syncActive()
+    }
+
+    function handleWLC() {
+        if (winRefresher.running) {
+            _winRefreshQueued = true
+        } else {
+            winRefresher.running = true
+        }
     }
 
     function syncActive() {
@@ -267,7 +277,6 @@ ShellRoot {
         model: Quickshell.screens.filter(s => ["DP-1", "HDMI-A-1", "DP-2"].includes(s.name))
         TopBar {
             screen: modelData
-            workspaceEmpty: root.niriOutputEmpty[modelData.name] ?? true
             activeWindowTitle: root.niriActiveWindowTitle
             cpuUsage: root.cpuUsage
             cpuTotal: root.cpuTotal
@@ -283,7 +292,6 @@ ShellRoot {
         model: Quickshell.screens.filter(s => ["DP-1", "HDMI-A-1", "DP-2"].includes(s.name))
         BottomDock {
             screen: modelData
-            workspaceEmpty: root.niriOutputEmpty[modelData.name] ?? true
             onSummonWalker: root.launchWalker()
             onSummonKitty: root.launchKitty()
             onSummonFirefox: root.launchFirefox()

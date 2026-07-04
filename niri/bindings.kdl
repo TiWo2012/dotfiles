@@ -16,7 +16,7 @@ binds {
 
     Mod+T hotkey-overlay-title="Toggle window floating/tiling" { toggle-window-floating; }
     Mod+F hotkey-overlay-title="Full screen" { maximize-column; }
-    Mod+Shift+F hotkey-overlay-title="Tiled full screen" { maximize-column; }
+    Mod+Shift+F hotkey-overlay-title="Full screen" { fullscreen-window; }
     Mod+Ctrl+F hotkey-overlay-title="Expand column" { expand-column-to-available-width; }
 
 
