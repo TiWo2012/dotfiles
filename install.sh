@@ -166,7 +166,6 @@ install_aur() {
   run_yay localsend
   run_yay hyprwhspr-bin
   run_yay youtube-webapp-bin
-  run_yay tpack
 
   ok "AUR packages installed"
 }
@@ -208,14 +207,31 @@ install_npm_global() {
 }
 
 setup_tmux() {
-  info "Setting up tmux plugins via tpack..."
+  info "Setting up tmux plugins via tpack (TPM drop-in)..."
 
-  if command -v tpack &>/dev/null; then
-    tmux new-session -d -s __tpack_install 2>/dev/null || true
-    tpack install 2>/dev/null && ok "Tmux plugins installed" || info "Run 'tpack install' inside tmux to install plugins"
-    tmux kill-session -t __tpack_install 2>/dev/null || true
+  local tpm_dir="$HOME/.tmux/plugins/tpm"
+  if [[ -d "$tpm_dir/.git" ]]; then
+    local remote
+    remote="$(git -C "$tpm_dir" remote get-url origin 2>/dev/null || true)"
+    if [[ "$remote" != *"tmuxpack/tpack"* ]]; then
+      info "Replacing TPM with tpack..."
+      rm -rf "$tpm_dir"
+      git clone https://github.com/tmuxpack/tpack "$tpm_dir"
+    else
+      ok "tpack already installed at $tpm_dir"
+    fi
+  elif [[ -d "$tpm_dir" ]]; then
+    info "Replacing existing directory with tpack..."
+    rm -rf "$tpm_dir"
+    git clone https://github.com/tmuxpack/tpack "$tpm_dir"
   else
-    info "tpack not found. Install it with the AUR step above."
+    git clone https://github.com/tmuxpack/tpack "$tpm_dir"
+  fi
+
+  if [[ -f "$tpm_dir/tpm" ]]; then
+    tmux new-session -d -s __tpack_install 2>/dev/null || true
+    "$tpm_dir/bin/install_plugins" 2>/dev/null && ok "Tmux plugins installed" || info "Run prefix+I inside tmux to install plugins"
+    tmux kill-session -t __tpack_install 2>/dev/null || true
   fi
 }
 
