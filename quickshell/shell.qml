@@ -63,6 +63,8 @@ ShellRoot {
             case "WorkspaceActivated": handleWSA(data); break
             case "WindowsChanged": handleWinC(data); break
             case "WindowFocusChanged": handleWFocus(data); break
+            case "WindowOpenedOrChanged": handleWindowOpenedOrChanged(data); break
+            case "WindowClosed": handleWindowClosed(data); break
             case "WindowLayoutsChanged": handleWLC(); break
         }
     }
@@ -176,6 +178,21 @@ ShellRoot {
         syncActive()
     }
 
+    function handleWindowOpenedOrChanged(data) {
+        const win = JSON.parse(JSON.stringify(data.window))
+        const m = JSON.parse(JSON.stringify(niriWindows))
+        m[win.id] = win
+        niriWindows = m
+        syncActive()
+    }
+
+    function handleWindowClosed(data) {
+        const m = JSON.parse(JSON.stringify(niriWindows))
+        delete m[data.id]
+        niriWindows = m
+        syncActive()
+    }
+
     function handleWLC() {
         if (winRefresher.running) {
             _winRefreshQueued = true
@@ -285,17 +302,6 @@ ShellRoot {
             onOpenNetwork: root.launchNetwork()
             onOpenAudio: root.launchAudio()
             onOpenBtop: root.launchBtop()
-        }
-    }
-
-    Variants {
-        model: Quickshell.screens.filter(s => ["DP-1", "HDMI-A-1", "DP-2"].includes(s.name))
-        BottomDock {
-            screen: modelData
-            onSummonWalker: root.launchWalker()
-            onSummonKitty: root.launchKitty()
-            onSummonFirefox: root.launchFirefox()
-            onSummonYoutube: root.launchYoutube()
         }
     }
 }
